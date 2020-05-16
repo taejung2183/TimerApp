@@ -18,53 +18,60 @@ enum TimerMode {
 
 class TimeManager: ObservableObject {
     
-    //현재 타이머의 상태.
+    //현재 메인 타이머의 상태.
     @Published var timerMode: TimerMode = .reset
     
     //메인 타이머의 남은 시간.
-    @Published var leftTime: Int = 60
+    @Published var leftMainTime: Int = 0
     
     //사용자가 선택한 메인 타이머 시간.
-    var _timeForMainTimer: Int = 0
-    var timeForMainTimer: Int {
-        get { return _timeForMainTimer }
+    var _selectedMainTime: Int = 0
+    var selectedMainTime: Int {
+        get { return _selectedMainTime }
         set {
-            _timeForMainTimer = newValue
+            _selectedMainTime = newValue
         }
     }
     
-    var timer = Timer()
+    //메인 타이머.
+    var mainTimer = Timer()
     
-    /*
+    //쉬는 시간 타이머.
+    var breakTimer = Timer()
+    
+    
     init() {
-        self.timeForMainTimer = 60
-        self.leftTime = 60
+        self.selectedMainTime = 60
+        self.leftMainTime = self.selectedMainTime
     }
- */
+ 
    
     //타이머 작동 시작.
     func start() {
         
         timerMode = .running
         
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
+        mainTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
+            
+            self.leftMainTime -= 1
+            
             //타이머 종료.
-            if self.leftTime == 0 {
+            if self.leftMainTime == 0 {
                 self.reset()
             }
-            self.leftTime -= 1
+            
         })
     }
     
     func reset() {
         self.timerMode = .reset
         //self.leftTime = timeForMainTimer
-        self.leftTime = 60
-        timer.invalidate()
+        self.leftMainTime = self.selectedMainTime
+        mainTimer.invalidate()
     }
     
     func pause() {
         self.timerMode = .paused
-        timer.invalidate()
+        mainTimer.invalidate()
     }
 }

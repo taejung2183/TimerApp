@@ -21,7 +21,7 @@ struct ContentView: View {
                     }
                     .frame(maxWidth: .infinity)
                     
-                    Divider().frame(height: 30)
+                    Divider().frame(width: 10, height: 30)
 
                     //누적 시간.
                     VStack {

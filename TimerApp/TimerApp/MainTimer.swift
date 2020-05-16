@@ -21,14 +21,14 @@ struct MainTimer: View {
                     
                     //타이머 시간 표시.
                     ZStack {
-                        Text("\(self.timeManager.leftTime)")
+                        Text("\(self.timeManager.leftMainTime)")
                             .font(.system(size: 60))
                     }
+                    //타이머 숫자를 터치하면 시간 선택.
                     .onTapGesture(perform: {
                         self.showTimeSelection = true
                     })
                     .sheet(isPresented: self.$showTimeSelection){
-                        //타이머 숫자를 터치하면 시간 선택.
                         TimeSelection()
                     }
                     
