@@ -10,8 +10,13 @@ import SwiftUI
 
 struct MainTimer: View {
     
-    @ObservedObject var timeManager = TimeManager()
+    @ObservedObject var timeManager = TimeManager(60)
+    
+    // 시간 선택 화면 modal을 위한 Bool  변수.
     @State private var showTimeSelection: Bool = false
+    
+    // 시간 선택 화면에서 시간을 받아오는 임시 변수.
+    @State private var tmpTime: Int = 0
     
     var body: some View {
             
@@ -21,15 +26,21 @@ struct MainTimer: View {
                     
                     //타이머 시간 표시.
                     ZStack {
-                        Text("\(self.timeManager.leftMainTime)")
+                        if self.timeManager.leftMainTime > 3600 { //시:분:초
+                            Text("\((self.timeManager.leftMainTime) / 3600):\(((self.timeManager.leftMainTime) % 3600) / 60):\((((self.timeManager.leftMainTime) % 3600) % 60) % 60)")
                             .font(.system(size: 60))
+                        }
+                        else {//self.timeManager.leftMainTime > 60 { //분:초
+                            Text("\((self.timeManager.leftMainTime) / 60) : \((self.timeManager.leftMainTime) % 60)")
+                            .font(.system(size: 60))
+                        }
                     }
                     //타이머 숫자를 터치하면 시간 선택.
                     .onTapGesture(perform: {
                         self.showTimeSelection = true
                     })
                     .sheet(isPresented: self.$showTimeSelection){
-                        TimeSelection()
+                        TimeSelection(showTimeSelection: self.$showTimeSelection, timeManager: self.timeManager)
                     }
                     
                     Spacer()

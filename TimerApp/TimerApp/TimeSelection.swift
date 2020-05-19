@@ -12,6 +12,11 @@ struct TimeSelection: View {
     
     @State private var selectedTimeUnit = 0
     
+    @Binding var showTimeSelection: Bool
+    
+    @ObservedObject var timeManager: TimeManager
+    
+    
     var body: some View {
         GeometryReader { g in
             VStack(spacing:15) {
@@ -29,48 +34,77 @@ struct TimeSelection: View {
                 //시간 선택.
                 //Custom
                 if self.selectedTimeUnit == 0 {
-                    HStack(spacing: 10) {
-                        ForEach(0..<4) { num in
+                    ScrollView {
+                        HStack {
                             ZStack{
                                 RoundedRectangle(cornerRadius: 10.0)
-                                .stroke(Color.black)
-                                .frame(width: 80, height: 80)
+                                    .stroke(Color.blue)
+                                    .frame(width: 80, height: 80)
                                 
-                                Text("\(num)m")
+                                Text("48m")
                             }
+                            .onTapGesture(perform: {
+                                self.timeManager.setTime(48)
+                                self.showTimeSelection = false
+                            })
+                            
+                            ZStack{
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .stroke(Color.blue)
+                                    .frame(width: 80, height: 80)
+                                
+                                Text("52m")
+                            }
+                            .onTapGesture(perform: {
+                                self.timeManager.setTime(52)
+                                self.showTimeSelection = false
+                            })
                         }
                     }
-                    .animation(.default)
                 }
                 //1분 단위
                 else if self.selectedTimeUnit == 1 {
-                    HStack(spacing: 10) {
-                        ForEach(0..<4) { num in
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 10.0)
-                                .stroke(Color.black)
-                                .frame(width: 80, height: 80)
-                                
-                                Text("\(num)m")
+                    ScrollView {
+                        ForEach(0 ..< 10) { row in
+                            HStack(spacing: 10) {
+                                ForEach(1 ..< 5) { col in
+                                    ZStack{
+                                        RoundedRectangle(cornerRadius: 10.0)
+                                            .stroke(Color.blue)
+                                            .frame(width: 80, height: 80)
+                                        
+                                        Text("\(col + (row * 4))m")
+                                    }
+                                    .onTapGesture(perform: {
+                                        self.timeManager.setTime(60 * (col + (row * 4)))
+                                        self.showTimeSelection = false
+                                    })
+                                }
                             }
                         }
                     }
-                    .animation(.default)
                 }
                 //5분 단위
                 else { //selectedTimeUnit == 2
-                    HStack(spacing: 10) {
-                        ForEach(0..<4) { num in
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 10.0)
-                                .stroke(Color.black)
-                                .frame(width: 80, height: 80)
-                                
-                                Text("\(num * 5)m")
+                    ScrollView {
+                        ForEach(0 ..< 10) { row in
+                            HStack(spacing: 10) {
+                                ForEach(1 ..< 5) { col in
+                                    ZStack{
+                                        RoundedRectangle(cornerRadius: 10.0)
+                                            .stroke(Color.blue)
+                                            .frame(width: 80, height: 80)
+                                        
+                                        Text("\((col + (row * 4)) * 5)m")
+                                    }
+                                    .onTapGesture(perform: {
+                                        self.timeManager.setTime(60 * (col + (row * 4)) * 5)
+                                        self.showTimeSelection = false
+                                    })
+                                }
                             }
                         }
                     }
-                    .animation(.default)
                 }
                 
                 
@@ -80,8 +114,3 @@ struct TimeSelection: View {
     }
 }
 
-struct TimeSelection_Previews: PreviewProvider {
-    static var previews: some View {
-        TimeSelection()
-    }
-}

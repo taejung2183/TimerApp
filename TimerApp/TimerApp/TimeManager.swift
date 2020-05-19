@@ -28,11 +28,9 @@ class TimeManager: ObservableObject {
     var _selectedMainTime: Int = 0
     var selectedMainTime: Int {
         get { return _selectedMainTime }
-        set {
-            _selectedMainTime = newValue
-        }
+        set { _selectedMainTime = newValue }
     }
-    
+
     //메인 타이머.
     var mainTimer = Timer()
     
@@ -40,12 +38,17 @@ class TimeManager: ObservableObject {
     var breakTimer = Timer()
     
     
-    init() {
-        self.selectedMainTime = 60
+    init(_ time: Int) {
+        self.selectedMainTime = time
         self.leftMainTime = self.selectedMainTime
     }
- 
-   
+    
+    //타이머 시간 변경.
+    func setTime(_ time: Int) {
+        self.selectedMainTime = time
+        self.leftMainTime = self.selectedMainTime
+    }
+    
     //타이머 작동 시작.
     func start() {
         
