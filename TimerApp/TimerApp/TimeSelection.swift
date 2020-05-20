@@ -14,6 +14,8 @@ struct TimeSelection: View {
     
     @Binding var showTimeSelection: Bool
     
+    @Binding var isMainTimer: Bool
+
     @ObservedObject var timeManager: TimeManager
     
     
@@ -41,11 +43,18 @@ struct TimeSelection: View {
                                     .stroke(Color.blue)
                                     .frame(width: 80, height: 80)
                                 
-                                Text("48m")
+                                Text("3s")
                             }
                             .onTapGesture(perform: {
-                                self.timeManager.setTime(48)
-                                self.showTimeSelection = false
+                                if self.isMainTimer {
+                                    self.timeManager.setMainTime(3)
+                                    self.isMainTimer = false
+                                    self.showTimeSelection = false
+                                }
+                                else {
+                                    self.timeManager.setBreakTime(3)
+                                    self.showTimeSelection = false
+                                }
                             })
                             
                             ZStack{
@@ -56,8 +65,15 @@ struct TimeSelection: View {
                                 Text("52m")
                             }
                             .onTapGesture(perform: {
-                                self.timeManager.setTime(52)
-                                self.showTimeSelection = false
+                                if self.isMainTimer {
+                                    self.timeManager.setMainTime(48)
+                                    self.isMainTimer = false
+                                    self.showTimeSelection = false
+                                }
+                                else {
+                                    self.timeManager.setBreakTime(48)
+                                    self.showTimeSelection = false
+                                }
                             })
                         }
                     }
@@ -76,8 +92,15 @@ struct TimeSelection: View {
                                         Text("\(col + (row * 4))m")
                                     }
                                     .onTapGesture(perform: {
-                                        self.timeManager.setTime(60 * (col + (row * 4)))
-                                        self.showTimeSelection = false
+                                        if self.isMainTimer {
+                                            self.timeManager.setMainTime(60 * (col + (row * 4)))
+                                            self.isMainTimer = false
+                                            self.showTimeSelection = false
+                                        }
+                                        else {
+                                            self.timeManager.setBreakTime(60 * (col + (row * 4)))
+                                            self.showTimeSelection = false
+                                        }
                                     })
                                 }
                             }
@@ -98,8 +121,15 @@ struct TimeSelection: View {
                                         Text("\((col + (row * 4)) * 5)m")
                                     }
                                     .onTapGesture(perform: {
-                                        self.timeManager.setTime(60 * (col + (row * 4)) * 5)
-                                        self.showTimeSelection = false
+                                        if self.isMainTimer {
+                                            self.timeManager.setMainTime(60 * (col + (row * 4)) * 5)
+                                            self.isMainTimer = false
+                                            self.showTimeSelection = false
+                                        }
+                                        else {
+                                            self.timeManager.setBreakTime(60 * (col + (row * 4)) * 5)
+                                            self.showTimeSelection = false
+                                        }
                                     })
                                 }
                             }

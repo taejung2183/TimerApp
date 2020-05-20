@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4615E0A624751E0A0072B472 /* TotalTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4615E0A524751E0A0072B472 /* TotalTimeView.swift */; };
 		465EC49F246E88E4002A7362 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465EC49E246E88E4002A7362 /* AppDelegate.swift */; };
 		465EC4A1246E88E4002A7362 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465EC4A0246E88E4002A7362 /* SceneDelegate.swift */; };
 		465EC4A3246E88E4002A7362 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465EC4A2246E88E4002A7362 /* ContentView.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4615E0A524751E0A0072B472 /* TotalTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalTimeView.swift; sourceTree = SOURCE_ROOT; };
 		465EC49B246E88E4002A7362 /* TimerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		465EC49E246E88E4002A7362 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		465EC4A0246E88E4002A7362 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				465EC4A2246E88E4002A7362 /* ContentView.swift */,
 				46C0FBE0246FBDEF001EE7FC /* TimeManager.swift */,
 				46C0FBE2246FD601001EE7FC /* TimeSelection.swift */,
+				4615E0A524751E0A0072B472 /* TotalTimeView.swift */,
 				465EC4CE246E9268002A7362 /* MainTimer.swift */,
 				465EC4A4246E88E7002A7362 /* Assets.xcassets */,
 				465EC4A9246E88E7002A7362 /* LaunchScreen.storyboard */,
@@ -279,6 +282,7 @@
 				465EC4CF246E9268002A7362 /* MainTimer.swift in Sources */,
 				465EC49F246E88E4002A7362 /* AppDelegate.swift in Sources */,
 				465EC4A1246E88E4002A7362 /* SceneDelegate.swift in Sources */,
+				4615E0A624751E0A0072B472 /* TotalTimeView.swift in Sources */,
 				46C0FBE3246FD601001EE7FC /* TimeSelection.swift in Sources */,
 				46C0FBE1246FBDEF001EE7FC /* TimeManager.swift in Sources */,
 				465EC4A3246E88E4002A7362 /* ContentView.swift in Sources */,
