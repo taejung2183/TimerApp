@@ -26,24 +26,24 @@ class TimeManager: ObservableObject {
     @Published var breakTimerMode: TimerMode = .reset
 
     
-    //메인 타이머의 남은 시간.
-    @Published var leftMainTime: Int = 0
-    //break 타이머 남은 시간.
-    @Published var leftBreakTime: Int = 0
 
-    
     //사용자가 선택한 메인 타이머 시간.
-    var _selectedMainTime: Int = 0
+    var _selectedMainTime: Int = UserDefaults.standard.integer(forKey: "mainTime")
     var selectedMainTime: Int {
         get { return _selectedMainTime }
         set { _selectedMainTime = newValue }
     }
     //사용자가 선택한 break 타이머 시간.
-    var _selectedBreakTime: Int = 0
+    var _selectedBreakTime: Int = UserDefaults.standard.integer(forKey: "breakTime")
     var selectedBreakTime: Int {
         get { return _selectedBreakTime }
         set { _selectedBreakTime = newValue }
     }
+    
+    //메인 타이머의 남은 시간.
+    @Published var leftMainTime: Int = UserDefaults.standard.integer(forKey: "mainTime")
+    //break 타이머 남은 시간.
+    @Published var leftBreakTime: Int = UserDefaults.standard.integer(forKey: "breakTime")
 
     //메인 타이머.
     var mainTimer = Timer()
@@ -52,16 +52,14 @@ class TimeManager: ObservableObject {
     var breakTimer = Timer()
     
     //Total time
-    var totalTime: Int = 0
+    var totalTime: Int = UserDefaults.standard.integer(forKey: "totalTime")
     
-    
-    init(_ mainTime: Int, _ breakTime: Int) {
-        self.selectedMainTime = mainTime
+    /*
+    init() {
         self.leftMainTime = self.selectedMainTime
-        
-        self.selectedBreakTime = breakTime
         self.leftBreakTime = self.selectedBreakTime
     }
+    */
     
     //타이머 시간 변경.
     func setMainTime(_ time: Int) {
@@ -73,7 +71,7 @@ class TimeManager: ObservableObject {
         self.leftBreakTime = self.selectedBreakTime
     }
     
-    //메인 타이머 작동.
+    // MARK: Main timer operations
     func startMainTimer() {
         
         mainTimerMode = .running
@@ -84,9 +82,10 @@ class TimeManager: ObservableObject {
             self.totalTime += 1
             
             //타이머 종료.
-            if self.leftMainTime == -1 {
+            if self.leftMainTime == 0 {
                 self.resetMainTimer()
                 self.startBreakTimer()
+                UserDefaults.standard.set(self.totalTime, forKey: "totalTime")
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
             }
             
@@ -102,10 +101,11 @@ class TimeManager: ObservableObject {
     
     func pauseMainTimer() {
         self.mainTimerMode = .paused
+        UserDefaults.standard.set(self.totalTime, forKey: "totalTime")
         mainTimer.invalidate()
     }
     
-    //break 타이머 작동.
+    // MARK: Break timer operations
     func startBreakTimer() {
         
         breakTimerMode = .running
@@ -115,7 +115,7 @@ class TimeManager: ObservableObject {
             self.leftBreakTime -= 1
             
             //타이머 종료.
-            if self.leftBreakTime == -1 {
+            if self.leftBreakTime == 0 {
                 self.resetBreakTimer()
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
             }
@@ -134,4 +134,7 @@ class TimeManager: ObservableObject {
         self.breakTimerMode = .paused
         breakTimer.invalidate()
     }
+    
+   
+
 }

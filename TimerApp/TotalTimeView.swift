@@ -8,9 +8,16 @@
 
 import SwiftUI
 
+/*
+ let now = Date()
+ let tomorrow = Date().addingTimeInterval(86400)
+ let range = now ... tomorrow
+ 
+ */
+
 struct TotalTimeView: View {
     
-    @ObservedObject var timeManager: TimeManager
+    @ObservedObject var timeManager = TimeManager()
     
     var body: some View {
         GeometryReader { g in
@@ -25,5 +32,12 @@ struct TotalTimeView: View {
                 }
             }
         }
+    }
+}
+
+
+struct TotalTimeView_Previews: PreviewProvider {
+    static var previews: some View {
+        TotalTimeView()
     }
 }

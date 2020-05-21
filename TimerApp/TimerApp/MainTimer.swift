@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MainTimer: View {
     
-    @ObservedObject var timeManager = TimeManager(3600, 300)
+    @ObservedObject var timeManager = TimeManager()
     
     // 시간 선택 화면 modal을 위한 Bool  변수.
     @State private var showTimeSelection: Bool = false
@@ -23,7 +23,7 @@ struct MainTimer: View {
     
     // main timer / break timer를 구별해주는 변수.
     @State private var isMainTimer: Bool = false
-    
+        
     var body: some View {
             
         VStack {
@@ -132,7 +132,7 @@ struct MainTimer: View {
                     HStack{
                         Image(systemName: "gobackward")
                             .resizable()
-                            .frame(width: g.size.width/14, height: g.size.height/22)
+                            .frame(width: 25, height: 25)
                             .onTapGesture(perform: {
                                 self.timeManager.resetMainTimer()
                             })
@@ -144,7 +144,7 @@ struct MainTimer: View {
                         //타이머 시작 버튼.
                         Image(systemName: self.timeManager.mainTimerMode == .running ? "pause" : "play")
                             .resizable()
-                            .frame(width: g.size.width/14, height: g.size.height/22)
+                            .frame(width: 25, height: 25)
                             .onTapGesture(perform: {
                                 if self.timeManager.mainTimerMode == .running {
                                     self.timeManager.pauseMainTimer()
