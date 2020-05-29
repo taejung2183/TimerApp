@@ -52,7 +52,7 @@ class TimeManager: ObservableObject {
     var breakTimer = Timer()
     
     //Total time
-    var totalTime: Int = UserDefaults.standard.integer(forKey: "totalTime")
+    @Published var totalTime: Int = UserDefaults.standard.integer(forKey: "totalTime")
     
     /*
     init() {
@@ -80,6 +80,15 @@ class TimeManager: ObservableObject {
             
             self.leftMainTime -= 1
             self.totalTime += 1
+            /*
+             Retrieving current time.
+             let currentDateTime = Date()
+             let formatter = DateFormatter()
+             formatter.timeStyle = .medium
+             formatter.dateStyle = .long
+             
+             let dateTimeString = formatter.string(from: currentDateTime)
+             */
             
             //타이머 종료.
             if self.leftMainTime == 0 {

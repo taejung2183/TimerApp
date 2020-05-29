@@ -31,6 +31,9 @@ struct TotalTimeView: View {
                     .font(.system(size: 20))
                 }
             }
+            .onTapGesture(perform: {
+                self.timeManager.totalTime = 0
+            })
         }
     }
 }
