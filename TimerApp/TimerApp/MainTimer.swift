@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct MainTimer: View {
     
@@ -163,6 +164,13 @@ struct MainTimer: View {
                 .offset(y: g.size.height/2.5)
             }
         }
+            /*
+        .onAppear(perform: {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.badge,.sound,.alert]){ (_, _) in
+            
+            }
+        })
+ */
     }
 }
 

@@ -92,12 +92,13 @@ class TimeManager: ObservableObject {
             
             //타이머 종료.
             if self.leftMainTime == 0 {
+                //self.Notify()
                 self.resetMainTimer()
+                
                 self.startBreakTimer()
                 UserDefaults.standard.set(self.totalTime, forKey: "totalTime")
-                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                //AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
             }
-            
         })
     }
     
@@ -125,8 +126,10 @@ class TimeManager: ObservableObject {
             
             //타이머 종료.
             if self.leftBreakTime == 0 {
+                //self.Notify()
                 self.resetBreakTimer()
-                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                //AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                
             }
             
         })
@@ -144,6 +147,14 @@ class TimeManager: ObservableObject {
         breakTimer.invalidate()
     }
     
-   
-
+    func Notify() {
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Message"
+        content.body = "Timer completed!"
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let req = UNNotificationRequest(identifier: "MSG", content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(req, withCompletionHandler: nil)
+    }
 }
