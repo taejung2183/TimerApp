@@ -50,7 +50,7 @@ struct TotalTimeView: View {
                             Image(systemName: "arrowtriangle.left")
                                 .resizable()
                                 .frame(width: 20, height: 20)
-                                .foregroundColor(.black)
+                                .foregroundColor(.blue)
                         }
                         
                         Spacer()
@@ -61,7 +61,7 @@ struct TotalTimeView: View {
                             Image(systemName: "arrowtriangle.right")
                                 .resizable()
                                 .frame(width: 20, height: 20)
-                                .foregroundColor(.black)
+                                .foregroundColor(.blue)
                         }
                     }
                     
@@ -78,7 +78,7 @@ struct TotalTimeView: View {
                     ForEach(0...6,id: \.self) { i in
                         ZStack {
                             RoundedRectangle(cornerRadius: 10.0)
-                                .stroke(Color.black)
+                                .stroke(Color.blue)
                                 .frame(width: g.size.width-10, height: 70)
                                 .padding(.horizontal)
                             
@@ -102,7 +102,7 @@ struct TotalTimeView: View {
                                     Text("")
                                         .frame(width: g.size.width/1.5, height: -15, alignment: .leading)
                                         .padding()
-                                        .background(Color.black)
+                                        .background(Color.blue)
                                         .clipShape(Capsule())
                                     
                                     Text("")
