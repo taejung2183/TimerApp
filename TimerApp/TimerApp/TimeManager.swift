@@ -51,10 +51,13 @@ class TimeManager: ObservableObject {
     //쉬는 시간 타이머.
     var breakTimer = Timer()
     
-    
-    
     //Total time
     @Published var totalTime: Int = UserDefaults.standard.integer(forKey: "totalTime")
+    
+    // Variables for current time info.
+    var curTime: [Int] = []
+    var timeTable: [[Int]] = []
+    
     
     /*
     init() {
@@ -76,20 +79,19 @@ class TimeManager: ObservableObject {
     // MARK: Main timer operations
     func startMainTimer() {
         
+        // Save current month,day,hour,minute.
+        curTime = getCurTime()
+        timeTable.append(curTime)
+        
+        // Set the timer mode to .running.
         mainTimerMode = .running
-                
+        
+        // 타이머 동작.
         mainTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
             
             self.leftMainTime -= 1
             self.totalTime += 1
-            /*
-            let currentDateTime = Date()
-            let formatter = DateFormatter()
-            formatter.timeStyle = .medium
-            formatter.dateStyle = .long
             
-            let dateTimeString = formatter.string(from: currentDateTime)
-            */
             //타이머 종료.
             if self.leftMainTime == 0 {
                 self.Notify()
@@ -98,6 +100,10 @@ class TimeManager: ObservableObject {
                 self.startBreakTimer()
                 UserDefaults.standard.set(self.totalTime, forKey: "totalTime")
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                
+                // Save current month,day,hour,minute.
+                self.curTime = self.getCurTime()
+                self.timeTable.append(self.curTime)
             }
         })
         
@@ -114,6 +120,10 @@ class TimeManager: ObservableObject {
         self.mainTimerMode = .paused
         UserDefaults.standard.set(self.totalTime, forKey: "totalTime")
         mainTimer.invalidate()
+        
+        // Save current month,day,hour,minute.
+        curTime = getCurTime()
+        timeTable.append(curTime)
     }
     
     // MARK: Break timer operations
@@ -148,6 +158,21 @@ class TimeManager: ObservableObject {
         breakTimer.invalidate()
     }
     
+    // Returns current time info.
+    func getCurTime() -> Array<Int> {
+        
+        var curTime: [Int] = []
+        
+        let components = Calendar.current.dateComponents([.month, .day, .hour, .minute], from: Date())
+        curTime.append(components.month ?? 0)
+        curTime.append(components.day ?? 0)
+        curTime.append(components.hour ?? 0)
+        curTime.append(components.minute ?? 0)
+        
+        return curTime
+    }
+    
+    // Notifies timer expiration.
     func Notify() {
         
         let content = UNMutableNotificationContent()
