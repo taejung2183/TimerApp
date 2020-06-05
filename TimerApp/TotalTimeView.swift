@@ -18,8 +18,13 @@ import SwiftUI
 struct TotalTimeView: View {
     
     @ObservedObject var timeManager = TimeManager()
-    
+    //timeManager.timeTable 배열에 오늘의 시간 기록이 저장되어 있음.
     let day: [String] = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+    let months: [String] = ["Jan","Fab","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+    @State private var selectedMonth = 0
+    
+    @State var month = "Jan"
+    @State var week = "1"
     
     var body: some View {
         /*
@@ -64,9 +69,26 @@ struct TotalTimeView: View {
                                 .foregroundColor(.blue)
                         }
                     }
+                    HStack {
+                        Text(self.month)
+                            .fontWeight(.bold)
+                            .onTapGesture(perform: {
+                                
+                                Picker(selection: self.$selectedMonth, label: Text("Choose a month")) {
+                                    ForEach(0 ..< self.months.count) {
+                                        Text(self.months[$0])
+                                    }
+                                }
+                                self.month = self.months[self.selectedMonth]
+                            })
+                        
+                        Text("week"+self.week)
+                            .fontWeight(.bold)
+                            .onTapGesture(perform: {
+                            
+                            })
+                    }
                     
-                    Text("Month   week1")
-                        .fontWeight(.bold)
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 10)
