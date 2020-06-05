@@ -51,6 +51,8 @@ class TimeManager: ObservableObject {
     //쉬는 시간 타이머.
     var breakTimer = Timer()
     
+    
+    
     //Total time
     @Published var totalTime: Int = UserDefaults.standard.integer(forKey: "totalTime")
     
@@ -75,31 +77,30 @@ class TimeManager: ObservableObject {
     func startMainTimer() {
         
         mainTimerMode = .running
-        
+                
         mainTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
             
             self.leftMainTime -= 1
             self.totalTime += 1
             /*
-             Retrieving current time.
-             let currentDateTime = Date()
-             let formatter = DateFormatter()
-             formatter.timeStyle = .medium
-             formatter.dateStyle = .long
-             
-             let dateTimeString = formatter.string(from: currentDateTime)
-             */
+            let currentDateTime = Date()
+            let formatter = DateFormatter()
+            formatter.timeStyle = .medium
+            formatter.dateStyle = .long
             
+            let dateTimeString = formatter.string(from: currentDateTime)
+            */
             //타이머 종료.
             if self.leftMainTime == 0 {
-                //self.Notify()
+                self.Notify()
                 self.resetMainTimer()
                 
                 self.startBreakTimer()
                 UserDefaults.standard.set(self.totalTime, forKey: "totalTime")
-                //AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
             }
         })
+        
     }
     
     func resetMainTimer() {
@@ -126,9 +127,9 @@ class TimeManager: ObservableObject {
             
             //타이머 종료.
             if self.leftBreakTime == 0 {
-                //self.Notify()
+                self.Notify()
                 self.resetBreakTimer()
-                //AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
                 
             }
             
@@ -157,4 +158,5 @@ class TimeManager: ObservableObject {
         let req = UNNotificationRequest(identifier: "MSG", content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(req, withCompletionHandler: nil)
     }
+
 }

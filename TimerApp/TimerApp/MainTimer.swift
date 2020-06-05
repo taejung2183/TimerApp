@@ -13,7 +13,7 @@ struct MainTimer: View {
     
     @ObservedObject var timeManager = TimeManager()
     
-    // 시간 선택 화면 modal을 위한 Bool  변수.
+    // 시간 선택 화면 modal을 위한 변수.
     @State private var showTimeSelection: Bool = false
     
     // TotalTime view modal.
@@ -24,6 +24,10 @@ struct MainTimer: View {
     
     // main timer / break timer를 구별해주는 변수.
     @State private var isMainTimer: Bool = false
+    
+    //테스트용 타이머.
+    @State var timeRemaining = 30
+    var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
         
     var body: some View {
             
@@ -164,13 +168,12 @@ struct MainTimer: View {
                 .offset(y: g.size.height/2.5)
             }
         }
-            /*
         .onAppear(perform: {
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge,.sound,.alert]){ (_, _) in
             
             }
         })
- */
+        
     }
 }
 

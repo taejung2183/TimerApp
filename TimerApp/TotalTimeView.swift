@@ -20,21 +20,36 @@ struct TotalTimeView: View {
     @ObservedObject var timeManager = TimeManager()
     
     var body: some View {
-        GeometryReader { g in
-            VStack {
-                if self.timeManager.totalTime > 3600 { //시:분:초
-                    Text("\((self.timeManager.totalTime) / 3600):\(((self.timeManager.totalTime) % 3600) / 60):\((((self.timeManager.totalTime) % 3600) % 60) % 60)")
-                    .font(.system(size: 20))
+        TabView {
+            GeometryReader { g in
+                VStack {
+                    if self.timeManager.totalTime > 3600 { //시:분:초
+                        Text("\((self.timeManager.totalTime) / 3600):\(((self.timeManager.totalTime) % 3600) / 60):\((((self.timeManager.totalTime) % 3600) % 60) % 60)")
+                        .font(.system(size: 20))
+                    }
+                    else {//self.timeManager.leftMainTime > 60 { //분:초
+                        Text("\((self.timeManager.totalTime) / 60) : \((self.timeManager.totalTime) % 60)")
+                        .font(.system(size: 20))
+                    }
                 }
-                else {//self.timeManager.leftMainTime > 60 { //분:초
-                    Text("\((self.timeManager.totalTime) / 60) : \((self.timeManager.totalTime) % 60)")
-                    .font(.system(size: 20))
-                }
+                .onTapGesture(perform: {
+                    self.timeManager.totalTime = 0
+                })
             }
-            .onTapGesture(perform: {
-                self.timeManager.totalTime = 0
-            })
+            .tabItem {
+                Text("Daily")
+            }
+            
+            Text("Weekly time table")
+            .tabItem {
+                Text("Weekly")
+            }
+            
         }
+    
+        
+        
+        
     }
 }
 
