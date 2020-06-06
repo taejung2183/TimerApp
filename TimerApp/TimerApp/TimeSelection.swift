@@ -155,4 +155,3 @@ struct TimeSelection: View {
         }
     }
 }
-

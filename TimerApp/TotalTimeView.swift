@@ -8,21 +8,16 @@
 
 import SwiftUI
 
-/*
- let now = Date()
- let tomorrow = Date().addingTimeInterval(86400)
- let range = now ... tomorrow
- 
- */
-
 struct TotalTimeView: View {
     
     @ObservedObject var timeManager = TimeManager()
     //timeManager.timeTable 배열에 오늘의 시간 기록이 저장되어 있음.
-    let day: [String] = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
-    let months: [String] = ["Jan","Fab","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-    @State private var selectedMonth = 0
     
+    let day: [String] = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+
+    @State private var showDateSelection = false
+    
+    @State private var selectedMonth = 0    
     @State var month = "Jan"
     @State var week = "1"
     
@@ -73,6 +68,13 @@ struct TotalTimeView: View {
                         Text(self.month)
                             .fontWeight(.bold)
                             .onTapGesture(perform: {
+                                self.showDateSelection = true
+                            })
+                            .sheet(isPresented: self.$showDateSelection){
+                                DateSelection(showDateSelection: self.$showDateSelection, month: self.$month, week: self.$week)
+                            }
+                            /*
+                            .onTapGesture(perform: {
                                 
                                 Picker(selection: self.$selectedMonth, label: Text("Choose a month")) {
                                     ForEach(0 ..< self.months.count) {
@@ -81,6 +83,7 @@ struct TotalTimeView: View {
                                 }
                                 self.month = self.months[self.selectedMonth]
                             })
+                            */
                         
                         Text("week"+self.week)
                             .fontWeight(.bold)
@@ -145,6 +148,40 @@ struct TotalTimeView: View {
             }
         }
         
+    }
+}
+
+struct DateSelection: View {
+    
+    let day: [String] = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+    let months: [String] = ["Jan","Fab","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+    @State private var selectedMonth = 0
+    
+    @Binding var showDateSelection: Bool
+    @Binding var month: String
+    @Binding var week: String
+    
+    var body: some View {
+        VStack {
+            Picker(selection: $selectedMonth, label: Text("")) {
+                ForEach(0 ..< months.count) {
+                    Text(self.months[$0])
+                }
+            }
+            
+            HStack {
+                Spacer()
+                
+                Text("Done")
+                    .foregroundColor(.blue)
+                    .onTapGesture(perform: {
+                        self.month = self.months[self.selectedMonth]
+                    })
+            }
+        }
+        .frame(width: UIScreen.main.bounds.width-40, height: UIScreen.main.bounds.width / 2)
+        //.background(Color.gray)
+        .cornerRadius(12)
     }
 }
 
